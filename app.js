@@ -24,7 +24,7 @@ function addTodo() { //adds todos to allTodos
     }
 }
 function updateTodoList(){ //renders todo list elements
-    todoListUL.innerHTML = ""; //defines todoListUL as empty HTML element
+    todoListUL.innerHTML = ""; //assigns empty HTML element to todoListUL (UL = unordered list)
     allTodos.forEach((todo, todoIndex)=>{ //runs once for each todo in the array (needs todo's array index to run)
         const todoItem = createTodoItem(todo, todoIndex); //so for each todo, a todoItem (HTML todo element) is created
         todoListUL.append(todoItem); //each todoItem created is added to todoListUL
@@ -32,10 +32,10 @@ function updateTodoList(){ //renders todo list elements
     }) 
 }
 function createTodoItem(todo, todoIndex){ //creates individual todo HTML elements
-    const todoId = "todo-"+todoIndex;
-    const todoListItem = document.createElement("li");
-    const todoText = todo.text
-    todoListItem.className = "todo"
+    const todoId = "todo-"+todoIndex; //todo ID logic
+    const todoListItem = document.createElement("li"); //creates HTML list item element <li></li>
+    const todoText = todo.text //access text property of current todoObject (todo) and saves the value as todoText
+    todoListItem.className = "todo" //assigns todoListItem to respective html class
     todoListItem.innerHTML = `    
                 <input type="checkbox" id="${todoId}">
                 <label class="custom-checkbox" for="${todoId}">
@@ -49,7 +49,7 @@ function createTodoItem(todo, todoIndex){ //creates individual todo HTML element
                     <svg fill="var(--secondary-color)" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
                          <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
                 </button>
-    `
+    ` //assigns html to todoListUL 
     const deleteButton = todoListItem.querySelector(".delete-button");
     deleteButton.addEventListener("click", ()=>{
         deleteTodoItem(todoIndex);
