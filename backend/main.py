@@ -33,3 +33,12 @@ async def get_todo(todo_id: str):
             return todo
     
     raise HTTPException(status_code=404, detail="Todo not found")
+
+@app.delete("/todos/{todo_id}", status_code=200)
+async def delete_todo(todo_id: str):
+    for todo in todos:
+        if todo["id"] == todo_id:
+            todos.remove(todo)
+            return todo
+    
+    raise HTTPException(status_code=404, detail="Todo not found")
