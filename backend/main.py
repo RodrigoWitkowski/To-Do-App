@@ -12,7 +12,7 @@ todos = []
 
 @app.post("/todos",status_code=201)
 async def create_todo(todo: TodoCreate):
-    todo_data = todo.model_dump() ##why model_dump()?
+    todo_data = todo.model_dump()
     todo_data["id"] = str(uuid4())
 
     todos.append(todo_data)
