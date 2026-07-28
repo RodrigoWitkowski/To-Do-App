@@ -1,11 +1,11 @@
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from uuid import uuid4
 
 app = FastAPI()
 
 class TodoCreate(BaseModel):
-    text: str
+    text: str = Field(min_length=1, max_length=200)
     completed: bool = False
 
 todos = []
@@ -41,4 +41,18 @@ async def delete_todo(todo_id: str):
             todos.remove(todo)
             return todo
     
+    raise HTTPException(status_code=404, detail="Todo not found")
+
+class TodoUpdate(BaseModel):
+    text: str | None = None
+    completed: bool | None = None
+
+@app.patch("/todos/{todo_id}", status_code=200)
+async def update_todo(todo_id: str, changes: TodoUpdate):
+    for todo in todos:
+        if todo["id"] == todo_id:
+            update_data = changes.model_dump(exclude_unset=True)
+            todo.update(update_data)
+            return todo
+            
     raise HTTPException(status_code=404, detail="Todo not found")
