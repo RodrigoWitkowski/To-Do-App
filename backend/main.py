@@ -4,14 +4,14 @@ from uuid import uuid4
 
 app = FastAPI()
 
-class TodoCreate(BaseModel):
+class TodoCreate(BaseModel): #referencing BaseModel (pydantic class) so TodoCreate inherits its atributes and methods. FastAPI uses BaseModel to validate the request, otherwise returns 422
     text: str = Field(min_length=1, max_length=200)
     completed: bool = False
 
 todos = []
 
 @app.post("/todos",status_code=201)
-async def create_todo(todo: TodoCreate):
+async def create_todo(todo: TodoCreate): #FastAPI enforces todo to follow TodoCreate format (this is where the validation happends)
     todo_data = todo.model_dump()
     todo_data["id"] = str(uuid4())
 
