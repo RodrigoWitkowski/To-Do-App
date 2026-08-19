@@ -5,7 +5,7 @@ from psycopg.rows import dict_row
 
 load_dotenv()
 
-DATABASE_URL = psycopg.os.getenv("DATABASE_URL")
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 if not DATABASE_URL:
     raise RuntimeError("DATABASE_URL is not set")
